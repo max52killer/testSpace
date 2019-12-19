@@ -9,6 +9,10 @@
     <!--<ant-table></ant-table>-->
     <ant-table1 v-if="sel=='01'"></ant-table1>
     <ant-table v-if="sel=='02'"></ant-table>
+
+    <div class="get-code" @click="refreshCode()">
+      <identity :identifyCode="identifyCode"></identity>
+    </div>
   </div>
 </template>
 
@@ -16,29 +20,49 @@
   import demoApi from "../api/demoApi";
   import antTable from "./a-table/index";
   import antTable1 from "./a-table/index1";
+  import identity from "./identity/index";
+
   export default {
     name: "index",
     props: {},
     computed: {},
     watch: {},
     //引用其它组件注册
-    components: {antTable,antTable1},
+    components: {antTable, antTable1, identity},
     created() {
+      this.refreshCode();
     },
     mounted() {
     },
     //设置当前全局使用的变量
     data() {
       return {
-        sel:"",
+        sel: "",
+        identifyCode: "",
+        identifyCodes: "0123456789abcdwerwshdjeJKDHRJHKOOPLMKQ",//随便打的
       };
     },
     //定义组件中调用的函数
     methods: {
       qqGet() {
-        demoApi.queryAll().then(resp=>{
-          console.log("请求结果：",resp);
+        demoApi.queryAll().then(resp => {
+          console.log("请求结果：", resp);
         });
+      },
+      refreshCode() {//
+        this.identifyCode = "";
+        this.makeCode(this.identifyCodes, 4);
+      },
+      randomNum(min, max) {
+        max = max + 1;
+        return Math.floor(Math.random() * (max - min) + min)
+      },
+      // 随机生成验证码字符串
+      makeCode(data, len) {
+        for (let i = 0; i < len; i++) {
+          this.identifyCode += data[this.randomNum(0, data.length - 1)]
+        }
+        console.log(this.identifyCode)
       }
     },
     //过滤器，用于对展示的数据进行处理  value|method
