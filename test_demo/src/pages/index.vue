@@ -5,10 +5,12 @@
     <select v-model="sel">
       <option value="01">表格1</option>
       <option value="02">表格2</option>
+      <option value='03'>表单验证</option>
     </select>
     <!--<ant-table></ant-table>-->
     <ant-table1 v-if="sel=='01'"></ant-table1>
     <ant-table v-if="sel=='02'"></ant-table>
+    <ant-form v-if="sel=='03'"></ant-form>
 
     <div class="get-code" @click="refreshCode()">
       <identity :identifyCode="identifyCode"></identity>
@@ -21,6 +23,7 @@
   import antTable from "./a-table/index";
   import antTable1 from "./a-table/index1";
   import identity from "./identity/index";
+  import antForm from "./a-form/index";
 
   export default {
     name: "index",
@@ -28,7 +31,7 @@
     computed: {},
     watch: {},
     //引用其它组件注册
-    components: {antTable, antTable1, identity},
+    components: {antTable, antTable1, identity,antForm},
     created() {
       this.refreshCode();
     },
