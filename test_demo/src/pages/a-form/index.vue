@@ -4,6 +4,16 @@
       <a-form-item
         :labelCol="{lg:{span:7},sm:{span:7}}"
         :wrapperCol="{lg:{span:10},sm:{span:17}}"
+        label="选择监听："
+      >
+        <a-select v-model="selModel">
+          <a-select-option value="01">显示</a-select-option>
+          <a-select-option value="02">隐藏</a-select-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item
+        :labelCol="{lg:{span:7},sm:{span:7}}"
+        :wrapperCol="{lg:{span:10},sm:{span:17}}"
         label="姓名："
       >
         <a-input
@@ -20,7 +30,7 @@
         :wrapperCol="{lg:{span:10},sm:{span:17}}"
         label="性别："
       >
-        <a-input v-decorator="['age',{initialValue:age}]" v-show="false"></a-input>
+        <a-input v-decorator="['age',{initialValue:age}]" v-show="isShow"></a-input>
         <a-input v-decorator="['sex']"></a-input>
       </a-form-item>
       <a-form-item :labelCol="{lg:{span:7},sm:{span:7}}" :wrapperCol="{lg:{span:10},sm:{span:17}}">
@@ -40,8 +50,19 @@ export default {
     return {
       vueValue: "",
       form: this.$form.createForm(this), // 只有这样注册后，才能通过表单拉取数据
-      age:19,
+      age: 19,
+      selModel:"",
+      isShow:false
     };
+  },
+  watch:{
+    selModel(){
+      if(this.selModel=='01'){
+        this.isShow=true;
+      }else{
+        this.isShow=false;
+      }
+    }
   },
   methods: {
     setValue() {
@@ -51,7 +72,7 @@ export default {
       // });
     },
     getValue() {
-      let listV = this.form.getFieldsValue();
+      let listV = this.form.getFieldsValue(["age"]);
       console.log("取的值：", listV);
       this.vueValue = JSON.stringify(listV);
     }
