@@ -1,12 +1,21 @@
 <template>
   <div>
-    <a-form :form="form">
+    <a-form :form="form"  @submit="getValue">
       <a-form-item
         :labelCol="{lg:{span:7},sm:{span:7}}"
         :wrapperCol="{lg:{span:10},sm:{span:17}}"
-        label="测试"
+        label="姓名："
       >
-        <a-input v-decorator="['testName']"></a-input>
+        <a-input v-decorator="['name',{rules: [{ required: true, message: '请输入客户名称!' }]}]"></a-input>
+      </a-form-item>
+      <a-form-item
+        :labelCol="{lg:{span:7},sm:{span:7}}"
+        :wrapperCol="{lg:{span:10},sm:{span:17}}"
+        label="性别："
+      >
+      <a-input v-decorator="['sex']"></a-input>
+      </a-form-item>
+      <a-form-item :labelCol="{lg:{span:7},sm:{span:7}}" :wrapperCol="{lg:{span:10},sm:{span:17}}">
         <a-button type="primary" @click="getValue">取表单值</a-button>
         取值结果：{{vueValue}}
       </a-form-item>
@@ -24,16 +33,17 @@ export default {
     };
   },
   methods: {
-      setValue(){
-          this.form.setFieldsValue({
-              testName:"测试数据"
-          })
-      },
-      getValue(){
-          let listV=this.form.getFieldsValue();
-          console.log("取的值：",listV.testName);
-          this.vueValue=listV.testName;
-      }
+    setValue() {
+      this.form.setFieldsValue({
+        name: "张三",
+        sex: "男"
+      });
+    },
+    getValue() {
+      let listV = this.form.getFieldsValue();
+      console.log("取的值：", listV);
+      this.vueValue = JSON.stringify(listV);
+    }
   }
 };
 </script>
