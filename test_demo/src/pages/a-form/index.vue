@@ -42,7 +42,7 @@
 </template>
 <script>
 export default {
-  name: "",
+  name: "form-index",
   created() {
     this.setValue();
   },
