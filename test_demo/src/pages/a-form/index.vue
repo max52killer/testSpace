@@ -84,6 +84,11 @@ export default {
       this.form.validateFields((err, fieldsValue) => {
         this.vueValue=fieldsValue;
         console.log("结果值：", fieldsValue);
+        let rangePicker=fieldsValue['range-picker'];
+        let beginTime=rangePicker[0];
+        let endTime=rangePicker[1];
+        console.log("开始时间：",beginTime);
+        console.log("结束时间：",endTime);
       });
     }
   }
