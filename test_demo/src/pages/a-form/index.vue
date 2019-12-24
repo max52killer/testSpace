@@ -25,13 +25,12 @@
         }]"
         ></a-input>
       </a-form-item>
-      <a-form-item
-        :labelCol="{lg:{span:7},sm:{span:7}}"
-        :wrapperCol="{lg:{span:10},sm:{span:17}}"
-        label="性别："
-      >
+      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="性别：">
         <a-input v-decorator="['age',{initialValue:age}]" v-show="isShow"></a-input>
         <a-input v-decorator="['sex']"></a-input>
+      </a-form-item>
+      <a-form-item :labelCol="labelCol" :wrapperCol="wrapperCol" label="RangePicker">
+        <a-range-picker v-decorator="['range-picker', rangeConfig]" />
       </a-form-item>
       <a-form-item :labelCol="{lg:{span:7},sm:{span:7}}" :wrapperCol="{lg:{span:10},sm:{span:17}}">
         <a-button type="primary" @click="getValue">取表单值</a-button>
@@ -43,24 +42,34 @@
 <script>
 export default {
   name: "form-index",
+  beforeCreate() {
+    this.form = this.$form.createForm(this);
+  },
   created() {
     this.setValue();
   },
   data() {
     return {
       vueValue: "",
-      form: this.$form.createForm(this), // 只有这样注册后，才能通过表单拉取数据
+      // form: , // 只有这样注册后，才能通过表单拉取数据
       age: 19,
-      selModel:"",
-      isShow:false
+      selModel: "",
+      labelCol: { lg: { span: 7 }, sm: { span: 7 } },
+      wrapperCol: { lg: { span: 10 }, sm: { span: 17 } },
+      isShow: false,
+      rangeConfig: {
+        rules: [
+          { type: "array", required: true, message: "Please select time!" }
+        ]
+      }
     };
   },
-  watch:{
-    selModel(){
-      if(this.selModel=='01'){
-        this.isShow=true;
-      }else{
-        this.isShow=false;
+  watch: {
+    selModel() {
+      if (this.selModel == "01") {
+        this.isShow = true;
+      } else {
+        this.isShow = false;
       }
     }
   },
@@ -72,9 +81,10 @@ export default {
       // });
     },
     getValue() {
-      let listV = this.form.getFieldsValue(["age"]);
-      console.log("取的值：", listV);
-      this.vueValue = JSON.stringify(listV);
+      this.form.validateFields((err, fieldsValue) => {
+        this.vueValue=fieldsValue;
+        console.log("结果值：", fieldsValue);
+      });
     }
   }
 };
