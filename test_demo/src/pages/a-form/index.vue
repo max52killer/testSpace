@@ -85,8 +85,8 @@ export default {
         this.vueValue=fieldsValue;
         console.log("结果值：", fieldsValue);
         let rangePicker=fieldsValue['range-picker'];
-        let beginTime=rangePicker[0];
-        let endTime=rangePicker[1];
+        let beginTime=rangePicker[0].format('YYYY-MM-DD HH:mm:ss');
+        let endTime=rangePicker[1].format('YYYY-MM-DD HH:mm:ss');
         console.log("开始时间：",beginTime);
         console.log("结束时间：",endTime);
       });
