@@ -6,11 +6,13 @@
       <option value="01">表格1</option>
       <option value="02">表格2</option>
       <option value='03'>表单验证</option>
+      <option value='04'>文件上传</option>
     </select>
     <!--<ant-table></ant-table>-->
     <ant-table1 v-if="sel=='01'"></ant-table1>
     <ant-table v-if="sel=='02'"></ant-table>
     <ant-form v-if="sel=='03'"></ant-form>
+    <file-upload v-if="sel=='04'"></file-upload>
 
     <div class="get-code" @click="refreshCode()">
       <identity :identifyCode="identifyCode"></identity>
@@ -24,6 +26,7 @@
   import antTable1 from "./a-table/index1";
   import identity from "./identity/index";
   import antForm from "./a-form/index";
+  import fileUpload from "./a-file/index";
 
   export default {
     name: "index",
@@ -31,7 +34,7 @@
     computed: {},
     watch: {},
     //引用其它组件注册
-    components: {antTable, antTable1, identity,antForm},
+    components: {antTable, antTable1, identity, antForm,fileUpload},
     created() {
       this.refreshCode();
     },
@@ -47,6 +50,11 @@
     },
     //定义组件中调用的函数
     methods: {
+      handleExport() {
+        demoApi.exportBqxx().then(resp => {
+          console.log("下载成功！",resp);
+        });
+      },
       qqGet() {
         demoApi.queryAll().then(resp => {
           console.log("请求结果：", resp);

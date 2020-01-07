@@ -33,6 +33,19 @@
         <a-input v-decorator="['age',{initialValue:age}]" v-show="isShow"></a-input>
         <a-input v-decorator="['sex']"></a-input>
       </a-form-item>
+      <a-form-item label='时间:'>
+        <a-range-picker
+          v-decorator="['time', {initialValue: [moment(moment().startOf('day'), dateFormat), moment(moment().endOf('day'), dateFormat)]}]"
+          style="width:350px;"
+          format="YYYY-MM-DD HH:mm:ss"
+          :allowClear="false"
+          :showTime="{
+                        hideDisabledOptions: true,
+                        defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('23:59:59', 'HH:mm:ss')]
+                      }"
+          :placeholder="['开始日期', '结束日期']"
+        />
+      </a-form-item>
       <a-form-item :labelCol="{lg:{span:7},sm:{span:7}}" :wrapperCol="{lg:{span:10},sm:{span:17}}">
         <a-button type="primary" @click="getValue">取表单值</a-button>
         取值结果：{{vueValue}}
