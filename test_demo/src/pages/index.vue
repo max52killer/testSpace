@@ -7,6 +7,7 @@
       <option value="02">表格2</option>
       <option value='03'>表单验证</option>
       <option value='04'>文件上传</option>
+      <option value='05'>验证码生成</option>
     </select>
     <!--<ant-table></ant-table>-->
     <ant-table1 v-if="sel=='01'"></ant-table1>
@@ -14,7 +15,7 @@
     <ant-form v-if="sel=='03'"></ant-form>
     <file-upload v-if="sel=='04'"></file-upload>
 
-    <div class="get-code" @click="refreshCode()">
+    <div class="get-code" @click="refreshCode()" v-if="sel=='05'">
       <identity :identifyCode="identifyCode"></identity>
     </div>
   </div>
